@@ -7,8 +7,9 @@
 #define HEIGHT 480
 
 #include <stdbool.h>
+#include "key_linux.h"
 #include "mlx_linux/mlx.h"
-
+#include "x11_enums.h"
 typedef struct s_vec {
   double x;
   double y;
@@ -30,6 +31,7 @@ typedef struct s_info {
   double planeY;
   void* mlx;
   void* win;
+  void* buffer;
   double moveSpeed;
   double rotSpeed;
   t_keyinfo keyinfo;
@@ -38,16 +40,19 @@ typedef struct s_info {
 // clang-format off
 //@func
 /*
-** < engine_util.c > */
+** < draw.c > */
 
 void	verLine(t_info* info, int x, int y1, int y2, int color);
 /*
 ** < main.c > */
 
 int		main_loop(t_info* info);
-int		key_release(int key, t_info* info);
+int		key_release(t_keycode key, t_info* info);
+int		key_press(t_keycode key, t_info* info);
+/*
+** < movement.c > */
+
 void	handle_move(t_info* info);
-int		key_press(int key, t_info* info);
 /*
 ** < util.c > */
 

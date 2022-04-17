@@ -6,77 +6,63 @@
 /*   By: scarf <youkim@student.42seoul.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/19 17:40:13 by oouklich          #+#    #+#             */
-/*   Updated: 2022/04/17 09:26:31 by scarf            ###   ########.fr       */
+/*   Updated: 2022/04/17 13:46:47 by scarf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef KEY_LINUX_H
-# define KEY_LINUX_H
+#define KEY_LINUX_H
 
-/*
-** Keyboard LETTERS
-*/
+// Keyboard LETTERS
 
-# define K_A 97
-# define K_B 98
-# define K_C 99
-# define K_D 100
-# define K_E 101
-# define K_F 102
-# define K_G 103
-# define K_H 104
-# define K_I 105
-# define K_J 106
-# define K_K 107
-# define K_L 108
-# define K_M 109
-# define K_N 110
-# define K_O 111
-# define K_P 112
-# define K_Q 113
-# define K_R 114
-# define K_S 115
-# define K_T 116
-# define K_U 117
-# define K_V 118
-# define K_W 119
-# define K_X 120
-# define K_Y 121
-# define K_Z 122
+typedef enum e_keycode {
+  KEY_A = 97,
+  KEY_B = 98,
+  KEY_C = 99,
+  KEY_D = 100,
+  KEY_E = 101,
+  KEY_F = 102,
+  KEY_G = 103,
+  KEY_H = 104,
+  KEY_I = 105,
+  KEY_J = 106,
+  KEY_K = 107,
+  KEY_L = 108,
+  KEY_M = 109,
+  KEY_N = 110,
+  KEY_O = 111,
+  KEY_P = 112,
+  KEY_Q = 113,
+  KEY_R = 114,
+  KEY_S = 115,
+  KEY_T = 116,
+  KEY_U = 117,
+  KEY_V = 118,
+  KEY_W = 119,
+  KEY_X = 120,
+  KEY_Y = 121,
+  KEY_Z = 122,
 
-/*
-** Keyboard ARROWS
-*/
+  KEY_ARROW_LEFT = 65361,
+  KEY_ARROW_RIGHT = 65363,
+  KEY_ARROW_UP = 65362,
+  KEY_ARROW_DOWN = 65364,
 
-# define K_AR_L 65361
-# define K_AR_R 65363
-# define K_AR_U 65362
-# define K_AR_D 65364
+  KEY_NUMPAD_DIV = 65455,
+  KEY_NUMPAD_MUL = 65450,
+  KEY_NUMPAD_MIN = 65453,
+  KEY_NUMPAD_PLU = 65451,
 
-/*
-** Keyboard NUMPAD
-*/
+  KEY_SPACE = 32,
+  KEY_ESC = 65307,
+} t_keycode;
 
-# define K_NP_DIV 65455
-# define K_NP_MUL 65450
-# define K_NP_MIN 65453
-# define K_NP_PLU 65451
-
-/*
-** Keyboard MISC
-*/
-
-# define K_SP 32
-# define K_ESC 65307
-
-/*
-** Mouse
-*/
-
-# define M_CLK_L 1
-# define M_CLK_R 3
-# define M_CLK_M 2
-# define M_SCR_U 4
-# define M_SCR_D 5
+typedef enum e_mousecode {
+  MOUSE_LEFT = 1,
+  MOUSE_RIGHT = 3,
+  MOUSE_MIDDLE = 2,
+  MOUSE_SCROLL_UP = 4,
+  MOUSE_SCROLL_DOWN = 5,
+} t_mousecode;
 
 #endif
