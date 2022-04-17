@@ -11,6 +11,7 @@ OBJ = $(SRC:.c=.o)
 	$(CC) $(INC)  -c $< -o $@
 
 $(NAME): $(OBJ)
+	make docs
 	$(CC) $(INC) $^ $(LIB) -o $@
 
 all: $(NAME)
@@ -22,3 +23,6 @@ clean:
 	rm -f $(NAME) *.o
 
 re: clean all
+
+docs:
+	hgen -I engine.h $(SRC)

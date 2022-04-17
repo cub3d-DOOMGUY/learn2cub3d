@@ -1,0 +1,42 @@
+{
+  "folders": [
+    {
+      "path": "01_untextured_raycast"
+    },
+    {
+      "path": "02_textured_raycast"
+    },
+    {
+      "path": "03_img_textured_raycast"
+    },
+    {
+      "path": "04_floor_ceiling"
+    },
+    {
+      "path": "05_sprite_raycast"
+    }
+  ],
+  "settings": {
+    "files.associations": {
+      "**/*.pug": "jade",
+      "**/*.h": "c",
+      "**/*.c": "c",
+      "**/*.cpp": "cpp",
+      "**/*.html": "html",
+      "**/templates/**/*.html": "django-html",
+      "**/templates/**/*.css": "css",
+      "**/requirements{/**,*}.{txt,in}": "pip-requirements",
+      "*.html": "html",
+      "*.xpm": "c",
+      "*.h": "c",
+      "*.hpp": "cpp",
+      "*.njk": "nunjucks",
+      "**/templates/**/*": "django-txt",
+      "*.pug": "jade",
+      "*.list": "properties",
+      "*.sav": "json",
+      "*.lalrpop": "rust",
+      "ios": "c"
+    }
+  }
+}
