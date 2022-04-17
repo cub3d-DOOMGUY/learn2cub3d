@@ -1,5 +1,5 @@
 NAME := program.out
-LIB_PATH := ../../lib
+LIB_PATH := ../lib
 INC := -I$(LIB_PATH)
 LIB := -L$(LIB_PATH)/mlx_linux -lmlx -lXext -lX11 -lm
 CC := clang
