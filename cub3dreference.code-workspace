@@ -36,7 +36,13 @@
       "*.list": "properties",
       "*.sav": "json",
       "*.lalrpop": "rust",
-      "ios": "c"
+      "ios": "c",
+      "__node_handle": "c"
+    },
+    "[c]": {
+      "editor.formatOnSave": true,
+      "editor.formatOnPaste": true,
+      "editor.formatOnType": true
     }
   }
 }

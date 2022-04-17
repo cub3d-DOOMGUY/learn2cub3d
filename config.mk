@@ -1,5 +1,6 @@
 NAME := program.out
 LIB_PATH := ../lib
+CFLAGS := -Wall -Werror -Wextra
 INC := -I$(LIB_PATH)
 LIB := -L$(LIB_PATH)/mlx_linux -lmlx -lXext -lX11 -lm
 CC := clang
@@ -8,11 +9,10 @@ SRC = $(wildcard *.c)
 OBJ = $(SRC:.c=.o)
 
 %.o: %.c
-	$(CC) $(INC)  -c $< -o $@
+	$(CC) $(INC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
-	make docs
-	$(CC) $(INC) $^ $(LIB) -o $@
+	$(CC) $(INC) $(CFLAGS) $^ $(LIB) -o $@
 
 all: $(NAME)
 
