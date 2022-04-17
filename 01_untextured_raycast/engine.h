@@ -15,12 +15,9 @@ typedef enum e_config {
 } t_config;
 
 typedef struct s_engine {
-  double posX;
-  double posY;
-  double dirX;
-  double dirY;
-  double planeX;
-  double planeY;
+  t_vec pos;
+  t_vec dir;
+  t_vec plane;
   void* mlx;
   void* win;
   void* buffer;
@@ -56,5 +53,5 @@ void	vec__rotate(t_vec* vec, double angle);
 ** < raycast.c > */
 
 bool	is_raycast_refresh(t_keyinfo keyinfo);
-void	raycast(t_engine* engine);
+void	raycast(t_engine* e);
 #endif  // __ENGINE_H__

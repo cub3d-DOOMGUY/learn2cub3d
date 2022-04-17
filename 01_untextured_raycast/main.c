@@ -19,12 +19,9 @@ int main(void) {
   t_engine engine;
   engine.mlx = mlx_init();
 
-  engine.posX = 12;
-  engine.posY = 5;
-  engine.dirX = -1;
-  engine.dirY = 0;
-  engine.planeX = 0;
-  engine.planeY = 0.66;
+  engine.pos = (t_vec){12, 5};
+  engine.dir = (t_vec){-1, 0};
+  engine.plane = (t_vec){0, 0.66};
   engine.moveSpeed = 0.025;
   engine.rotSpeed = 0.01;
   engine.keyinfo = (t_keyinfo){false, false, false, false};
@@ -32,8 +29,8 @@ int main(void) {
   engine.win = mlx_new_window(engine.mlx, WIDTH, HEIGHT, "mlx");
 
   engine.img.img = mlx_new_image(engine.mlx, WIDTH, HEIGHT);
-  engine.img.data = (int*)mlx_get_data_addr(engine.img.img, &engine.img.bpp,
-                                          &engine.img.size_l, &engine.img.endian);
+  engine.img.data = (int*)mlx_get_data_addr(
+      engine.img.img, &engine.img.bpp, &engine.img.size_l, &engine.img.endian);
 
   raycast(&engine);
   mlx_loop_hook(engine.mlx, &main_loop, &engine);

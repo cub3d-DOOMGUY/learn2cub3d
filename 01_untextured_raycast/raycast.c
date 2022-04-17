@@ -8,16 +8,16 @@ bool is_raycast_refresh(t_keyinfo keyinfo) {
           keyinfo.is_left_pressed || keyinfo.is_right_pressed);
 }
 
-void raycast(t_engine* engine) {
-  clear_grid(engine->buf);
+void raycast(t_engine* e) {
+  clear_grid(e->buf);
 
   for (int x = 0; x < WIDTH; x++) {
     double cameraX = 2 * x / (double)WIDTH - 1;
-    double rayDirX = engine->dirX + engine->planeX * cameraX;
-    double rayDirY = engine->dirY + engine->planeY * cameraX;
+    double rayDirX = e->dir.x + e->plane.x * cameraX;
+    double rayDirY = e->dir.y + e->plane.y * cameraX;
 
-    int mapX = (int)engine->posX;
-    int mapY = (int)engine->posY;
+    int mapX = (int)e->pos.x;
+    int mapY = (int)e->pos.y;
 
     // length of ray from current position to next x or y-side
     double sideDistX;
@@ -37,17 +37,17 @@ void raycast(t_engine* engine) {
 
     if (rayDirX < 0) {
       stepX = -1;
-      sideDistX = (engine->posX - mapX) * deltaDistX;
+      sideDistX = (e->pos.x - mapX) * deltaDistX;
     } else {
       stepX = 1;
-      sideDistX = (mapX + 1.0 - engine->posX) * deltaDistX;
+      sideDistX = (mapX + 1.0 - e->pos.x) * deltaDistX;
     }
     if (rayDirY < 0) {
       stepY = -1;
-      sideDistY = (engine->posY - mapY) * deltaDistY;
+      sideDistY = (e->pos.y - mapY) * deltaDistY;
     } else {
       stepY = 1;
-      sideDistY = (mapY + 1.0 - engine->posY) * deltaDistY;
+      sideDistY = (mapY + 1.0 - e->pos.y) * deltaDistY;
     }
 
     while (is_hit == false) {
@@ -66,9 +66,9 @@ void raycast(t_engine* engine) {
         is_hit = true;
     }
     if (side == 0)
-      perpWallDist = (mapX - engine->posX + (1 - stepX) / 2) / rayDirX;
+      perpWallDist = (mapX - e->pos.x + (1 - stepX) / 2) / rayDirX;
     else
-      perpWallDist = (mapY - engine->posY + (1 - stepY) / 2) / rayDirY;
+      perpWallDist = (mapY - e->pos.y + (1 - stepY) / 2) / rayDirY;
 
     // Calculate HEIGHT of line to draw on screen
     int lineHeight = (int)(HEIGHT / perpWallDist);
@@ -97,7 +97,7 @@ void raycast(t_engine* engine) {
       color = color / 2;
 
     for (int y = drawStart; y < drawEnd; y++)
-      engine->buf[y][x] = color;
+      e->buf[y][x] = color;
     // verLine(info, x, drawStart, drawEnd, color);
   }
 }
