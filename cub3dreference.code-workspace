@@ -14,6 +14,12 @@
     },
     {
       "path": "05_sprite_raycast"
+    },
+    {
+      "path": "lib"
+    },
+    {
+      "path": "lib/libscarf"
     }
   ],
   "settings": {
@@ -37,7 +43,8 @@
       "*.sav": "json",
       "*.lalrpop": "rust",
       "ios": "c",
-      "__node_handle": "c"
+      "__node_handle": "c",
+      "numbers": "c"
     },
     "[c]": {
       "editor.formatOnSave": true,

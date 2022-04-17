@@ -1,7 +1,7 @@
 #include <math.h>
+#include "engine.h"
 #include "types__color.h"
 #include "types__engine.h"
-#include "engine.h"
 
 const extern int worldMap[24][24];
 

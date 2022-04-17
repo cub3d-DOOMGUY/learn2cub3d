@@ -6,7 +6,7 @@
 /*   By: scarf <youkim@student.42seoul.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 19:53:20 by yohlee            #+#    #+#             */
-/*   Updated: 2022/04/17 14:41:40 by scarf            ###   ########.fr       */
+/*   Updated: 2022/04/17 16:34:16 by scarf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,31 +93,31 @@ void calc(t_engine* info) {
   // FLOOR CASTING
   for (int y = 0; y < height; y++) {
     // rayDir for leftmost ray (x = 0) and rightmost ray (x = w)
-    float rayDirX0 = info->dirX - info->planeX;
-    float rayDirY0 = info->dirY - info->planeY;
-    float rayDirX1 = info->dirX + info->planeX;
-    float rayDirY1 = info->dirY + info->planeY;
+    double rayDirX0 = info->dirX - info->planeX;
+    double rayDirY0 = info->dirY - info->planeY;
+    double rayDirX1 = info->dirX + info->planeX;
+    double rayDirY1 = info->dirY + info->planeY;
 
     // Current y position compared to the center of the screen (the horizon)
     int p = y - height / 2;
 
     // Vertical position of the camera.
-    float posZ = 0.5 * height;
+    double posZ = 0.5 * height;
 
     // Horizontal distance from the camera to the floor for the current row.
     // 0.5 is the z position exactly in the middle between floor and ceiling.
-    float rowDistance = posZ / p;
+    double rowDistance = posZ / p;
 
     // calculate the real world step vector we have to add for each x (parallel
     // to camera plane) adding step by step avoids multiplications with a weight
     // in the inner loop
-    float floorStepX = rowDistance * (rayDirX1 - rayDirX0) / width;
-    float floorStepY = rowDistance * (rayDirY1 - rayDirY0) / width;
+    double floorStepX = rowDistance * (rayDirX1 - rayDirX0) / width;
+    double floorStepY = rowDistance * (rayDirY1 - rayDirY0) / width;
 
     // real world coordinates of the leftmost column. This will be updated as we
     // step to the right.
-    float floorX = info->posX + rowDistance * rayDirX0;
-    float floorY = info->posY + rowDistance * rayDirY0;
+    double floorX = info->posX + rowDistance * rayDirX0;
+    double floorY = info->posY + rowDistance * rayDirY0;
 
     for (int x = 0; x < width; ++x) {
       // the cell coord is simply got from the integer parts of floorX and

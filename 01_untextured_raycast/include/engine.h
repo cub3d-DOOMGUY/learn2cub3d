@@ -22,6 +22,5 @@ int		key_press(t_keycode key, t_engine* info);
 /*
 ** < movement.c > */
 
-void	handle_movement(t_engine* e);
-void	vec__rotate(t_vec* vec, double angle);
+void	engine__move_player(t_engine* e);
 #endif  // __ENGINE_H__

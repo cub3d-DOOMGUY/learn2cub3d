@@ -2,7 +2,7 @@
   "configurations": [
     {
       "name": "Linux",
-      "includePath": ["${default}", "/home/scarf/Repo/cub3dreference/lib"],
+      "includePath": ["${default}", "../lib", "../lib/libscarf/include"],
       "defines": [],
       "compilerPath": "/usr/bin/clang",
       "intelliSenseMode": "linux-clang-x64"

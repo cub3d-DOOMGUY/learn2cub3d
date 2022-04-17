@@ -13,7 +13,7 @@ int main_loop(t_engine* engine) {
     raycast(engine);
     draw(engine);
   }
-  handle_movement(engine);
+  engine__move_player(engine);
 
   return (0);
 }

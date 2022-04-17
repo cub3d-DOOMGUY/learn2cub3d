@@ -1,8 +1,13 @@
 NAME := program.out
 LIB_PATH := ../lib
 CFLAGS := -Wall -Werror -Wextra
-INC := -I$(LIB_PATH) -I include/ -I include/types
-LIB := -L$(LIB_PATH)/mlx_linux -lmlx -lXext -lX11 -lm
+LIBFT := $(LIB_PATH)/libscarf/libft.a
+
+INC := -I$(LIB_PATH) -I include/ -I include/types \
+       -I ../lib/libscarf/include/ -I ../lib/libscarf/include/types/
+LIB := -L$(LIB_PATH)/mlx_linux -L$(LIB_PATH)/libscarf \
+       -lmlx -lft -lXext -lX11 -lm
+
 CC := clang
 
 PKGS = engine raycast data
@@ -15,6 +20,9 @@ OBJ = $(SRC:.c=.o)
 
 $(NAME): $(OBJ)
 	$(CC) $(INC) $(CFLAGS) $^ $(LIB) -o $@
+
+$(LIBFT): 
+	make -C $(LIB_PATH)/libscarf/
 
 all: $(NAME)
 

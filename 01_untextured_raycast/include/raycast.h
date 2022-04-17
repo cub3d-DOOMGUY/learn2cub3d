@@ -1,6 +1,7 @@
 #ifndef __RAYCAST_H__
 #define __RAYCAST_H__
 
+#include "std__vector.h"
 #include "types__color.h"
 #include "types__engine.h"
 //@func

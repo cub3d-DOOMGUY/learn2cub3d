@@ -1,0 +1,3 @@
+[submodule "lib/libscarf"]
+	path = lib/libscarf
+	url = git@github.com:42cursus-youkim/libscarf.git
