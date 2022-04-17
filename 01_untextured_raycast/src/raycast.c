@@ -39,8 +39,6 @@ void raycast(t_engine* e) {
     // length of ray from one x or y-side to next x or y-side
     t_vec delta_dist = (t_vec){fabs(1 / ray_dir.x), fabs(1 / ray_dir.y)};
 
-    double perpWallDist;
-
     // what direction to step in x or y-direction (either +1 or -1)
     t_ivec step;
 
@@ -74,6 +72,7 @@ void raycast(t_engine* e) {
       }
     }
 
+    double perpWallDist;
     if (side == 0)
       perpWallDist = (map_pos.x - e->pos.x + (1 - step.x) / 2) / ray_dir.x;
     else

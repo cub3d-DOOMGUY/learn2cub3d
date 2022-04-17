@@ -7,9 +7,10 @@
 const extern int worldMap[24][24];
 
 int main_loop(t_engine* engine) {
-  if (is_raycast_refresh(engine->keyinfo))
+  if (is_raycast_refresh(engine->keyinfo)) {
     raycast(engine);
-  draw(engine);
+    draw(engine);
+  }
   handle_movement(engine);
 
   return (0);
@@ -33,6 +34,8 @@ int main(void) {
       engine.img.img, &engine.img.bpp, &engine.img.size_l, &engine.img.endian);
 
   raycast(&engine);
+  draw(&engine);
+
   mlx_loop_hook(engine.mlx, &main_loop, &engine);
   mlx_hook(engine.win, X11EVENTS__KeyPress, X11MASKS__KeyPressMask, &key_press,
            &engine);
