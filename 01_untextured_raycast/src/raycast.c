@@ -19,67 +19,65 @@ t_colors get_color(int map_y, int map_x) {
   return colors[index];
 }
 
+bool is_ray_hit_wall(const t_ivec* pos) {
+  return (worldMap[pos->x][pos->y] > 0);
+}
+
 void raycast(t_engine* e) {
   clear_grid(e->buf);
 
   for (int x = 0; x < WIDTH; x++) {
     double cameraX = 2 * x / (double)WIDTH - 1;
-    double rayDirX = e->dir.x + e->plane.x * cameraX;
-    double rayDirY = e->dir.y + e->plane.y * cameraX;
+    t_vec ray_dir = (t_vec){e->dir.x + e->plane.x * cameraX,
+                            e->dir.y + e->plane.y * cameraX};
 
-    int mapX = (int)e->pos.x;
-    int mapY = (int)e->pos.y;
+    t_ivec map_pos = (t_ivec){(int)e->pos.x, (int)e->pos.y};
 
     // length of ray from current position to next x or y-side
-    double sideDistX;
-    double sideDistY;
+    t_vec side_dist;
 
     // length of ray from one x or y-side to next x or y-side
-    double deltaDistX = fabs(1 / rayDirX);
-    double deltaDistY = fabs(1 / rayDirY);
+    t_vec delta_dist = (t_vec){fabs(1 / ray_dir.x), fabs(1 / ray_dir.y)};
+
     double perpWallDist;
 
     // what direction to step in x or y-direction (either +1 or -1)
-    int stepX;
-    int stepY;
+    t_ivec step;
 
-    bool is_hit = false;  // was there a wall hit?
-    int side;             // was a NS or a EW wall hit?
+    int side;  // was a NS or a EW wall hit?
 
-    if (rayDirX < 0) {
-      stepX = -1;
-      sideDistX = (e->pos.x - mapX) * deltaDistX;
+    if (ray_dir.x < 0) {
+      step.x = -1;
+      side_dist.x = (e->pos.x - map_pos.x) * delta_dist.x;
     } else {
-      stepX = 1;
-      sideDistX = (mapX + 1.0 - e->pos.x) * deltaDistX;
+      step.x = 1;
+      side_dist.x = (map_pos.x + 1.0 - e->pos.x) * delta_dist.x;
     }
-    if (rayDirY < 0) {
-      stepY = -1;
-      sideDistY = (e->pos.y - mapY) * deltaDistY;
+    if (ray_dir.y < 0) {
+      step.y = -1;
+      side_dist.y = (e->pos.y - map_pos.y) * delta_dist.y;
     } else {
-      stepY = 1;
-      sideDistY = (mapY + 1.0 - e->pos.y) * deltaDistY;
+      step.y = 1;
+      side_dist.y = (map_pos.y + 1.0 - e->pos.y) * delta_dist.y;
     }
 
-    while (is_hit == false) {
+    while (!is_ray_hit_wall(&map_pos)) {
       // jump to next map square, OR in x-direction, OR in y-direction
-      if (sideDistX < sideDistY) {
-        sideDistX += deltaDistX;
-        mapX += stepX;
+      if (side_dist.x < side_dist.y) {
+        side_dist.x += delta_dist.x;
+        map_pos.x += step.x;
         side = 0;
       } else {
-        sideDistY += deltaDistY;
-        mapY += stepY;
+        side_dist.y += delta_dist.y;
+        map_pos.y += step.y;
         side = 1;
       }
-      // Check if ray has hit a wall
-      if (worldMap[mapX][mapY] > 0)
-        is_hit = true;
     }
+
     if (side == 0)
-      perpWallDist = (mapX - e->pos.x + (1 - stepX) / 2) / rayDirX;
+      perpWallDist = (map_pos.x - e->pos.x + (1 - step.x) / 2) / ray_dir.x;
     else
-      perpWallDist = (mapY - e->pos.y + (1 - stepY) / 2) / rayDirY;
+      perpWallDist = (map_pos.y - e->pos.y + (1 - step.y) / 2) / ray_dir.y;
 
     // Calculate HEIGHT of line to draw on screen
     int lineHeight = (int)(HEIGHT / perpWallDist);
@@ -92,13 +90,12 @@ void raycast(t_engine* e) {
     if (drawEnd >= HEIGHT)
       drawEnd = HEIGHT - 1;
 
-    int color = get_color(mapY, mapX);
+    int color = get_color(map_pos.y, map_pos.x);
 
     if (side == 1)
       color = color / 2;
 
     for (int y = drawStart; y < drawEnd; y++)
       e->buf[y][x] = color;
-    // verLine(info, x, drawStart, drawEnd, color);
   }
 }

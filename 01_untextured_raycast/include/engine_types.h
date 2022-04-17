@@ -6,6 +6,11 @@ typedef struct s_vec {
   double y;
 } t_vec;
 
+typedef struct s_ivec {
+  int x;
+  int y;
+} t_ivec;
+
 typedef struct s_keyinfo {
   bool is_up_pressed;
   bool is_down_pressed;
