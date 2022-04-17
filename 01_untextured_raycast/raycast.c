@@ -3,7 +3,9 @@
 
 const extern int worldMap[24][24];
 
-void calc(t_info* info) {
+void raycast(t_info* info) {
+  clear_grid(info->buf);
+
   for (int x = 0; x < WIDTH; x++) {
     double cameraX = 2 * x / (double)WIDTH - 1;
     double rayDirX = info->dirX + info->planeX * cameraX;
@@ -26,7 +28,7 @@ void calc(t_info* info) {
     int stepY;
 
     bool is_hit = false;  // was there a wall hit?
-    int side;     // was a NS or a EW wall hit?
+    int side;             // was a NS or a EW wall hit?
 
     if (rayDirX < 0) {
       stepX = -1;
@@ -76,15 +78,15 @@ void calc(t_info* info) {
 
     int color;
     if (worldMap[mapY][mapX] == 1)
-      color = 0xFF0000;
+      color = 0xFF1111;
     else if (worldMap[mapY][mapX] == 2)
-      color = 0x00FF00;
+      color = 0x11FF11;
     else if (worldMap[mapY][mapX] == 3)
-      color = 0x0000FF;
+      color = 0x1111FF;
     else if (worldMap[mapY][mapX] == 4)
-      color = 0xFFFFFF;
+      color = 0xAAAAAA;
     else
-      color = 0xFFFF00;
+      color = 0xFFFF11;
 
     if (side == 1)
       color = color / 2;

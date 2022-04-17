@@ -3,7 +3,7 @@
 #include "engine.h"
 const extern int worldMap[24][24];
 
-void handle_move(t_info* info) {
+void handle_movement(t_info* info) {
   t_keyinfo keyinfo = info->keyinfo;
   // printf("key status: %d %d %d %d\n", keyinfo.is_up_pressed,
   //        keyinfo.is_down_pressed, keyinfo.is_left_pressed,

@@ -56,22 +56,26 @@ typedef struct s_info {
 // clang-format off
 //@func
 /*
-** < calc.c > */
-
-void	calc(t_info* info);
-/*
 ** < draw.c > */
 
 void	draw(t_info* info);
+void	clear_grid(int grid[HEIGHT][WIDTH]);
+/*
+** < keyinput.c > */
+
+int		key_release(t_keycode key, t_info* info);
+int		key_press(t_keycode key, t_info* info);
 /*
 ** < main.c > */
 
+bool	is_refresh(t_keyinfo keyinfo);
 int		main_loop(t_info* info);
-int		key_release(t_keycode key, t_info* info);
-int		key_press(t_keycode key, t_info* info);
-void	clear_grid(int grid[HEIGHT][WIDTH]);
 /*
 ** < movement.c > */
 
-void	handle_move(t_info* info);
+void	handle_movement(t_info* info);
+/*
+** < raycast.c > */
+
+void	raycast(t_info* info);
 #endif  // __ENGINE_H__
