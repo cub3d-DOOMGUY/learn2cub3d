@@ -6,7 +6,7 @@
 /*   By: scarf <youkim@student.42seoul.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 19:53:20 by yohlee            #+#    #+#             */
-/*   Updated: 2022/04/17 13:58:52 by scarf            ###   ########.fr       */
+/*   Updated: 2022/04/17 14:41:40 by scarf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_info {
   int** texture;
   double moveSpeed;
   double rotSpeed;
-} t_info;
+} t_engine;
 
 int worldMap[mapWidth][mapHeight] = {
     {8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 4, 4, 6, 4, 4, 6, 4, 6, 4, 4, 4, 6, 4},
@@ -80,7 +80,7 @@ int worldMap[mapWidth][mapHeight] = {
     {2, 2, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 2, 2, 0, 5, 0, 5, 0, 0, 0, 5, 5},
     {2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5}};
 
-void draw(t_info* info) {
+void draw(t_engine* info) {
   for (int y = 0; y < height; y++) {
     for (int x = 0; x < width; x++) {
       info->img.data[y * width + x] = info->buf[y][x];
@@ -89,7 +89,7 @@ void draw(t_info* info) {
   mlx_put_image_to_window(info->mlx, info->win, info->img.img, 0, 0);
 }
 
-void calc(t_info* info) {
+void calc(t_engine* info) {
   // FLOOR CASTING
   for (int y = 0; y < height; y++) {
     // rayDir for leftmost ray (x = 0) and rightmost ray (x = w)
@@ -325,13 +325,13 @@ void calc(t_info* info) {
   }
 }
 
-int main_loop(t_info* info) {
+int main_loop(t_engine* info) {
   calc(info);
   draw(info);
   return (0);
 }
 
-int key_press(int key, t_info* info) {
+int key_press(int key, t_engine* info) {
   if (key == KEY_W) {
     if (!worldMap[(int)(info->posX + info->dirX * info->moveSpeed)]
                  [(int)(info->posY)])
@@ -382,7 +382,7 @@ int key_press(int key, t_info* info) {
   return (0);
 }
 
-void load_image(t_info* info, int* texture, char* path, t_img* img) {
+void load_image(t_engine* info, int* texture, char* path, t_img* img) {
   img->img =
       mlx_xpm_file_to_image(info->mlx, path, &img->img_width, &img->img_height);
   img->data =
@@ -395,7 +395,7 @@ void load_image(t_info* info, int* texture, char* path, t_img* img) {
   mlx_destroy_image(info->mlx, img->img);
 }
 
-void load_texture(t_info* info) {
+void load_texture(t_engine* info) {
   t_img img;
 
   load_image(info, info->texture[0], "../assets/eagle.xpm", &img);
@@ -409,7 +409,7 @@ void load_texture(t_info* info) {
 }
 
 int main(void) {
-  t_info info;
+  t_engine info;
   info.mlx = mlx_init();
 
   info.posX = 22.0;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   02_textured_raycast.c                              :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scarf <youkim@student.42seoul.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/26 15:18:03 by yohlee            #+#    #+#             */
-/*   Updated: 2022/04/17 09:47:19 by scarf            ###   ########.fr       */
+/*   Updated: 2022/04/17 14:41:40 by scarf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct	s_info
 	int		texture[8][texHeight * texWidth];
 	double	moveSpeed;
 	double	rotSpeed;
-}				t_info;
+}				t_engine;
 
 int	worldMap[mapWidth][mapHeight] =
 						{
@@ -80,7 +80,7 @@ int	worldMap[mapWidth][mapHeight] =
 							{4,4,4,4,4,4,4,4,4,4,1,1,1,2,2,2,2,2,2,3,3,3,3,3}
 						};
 
-void	draw(t_info *info)
+void	draw(t_engine *info)
 {
 	for (int y = 0; y < height; y++)
 	{
@@ -92,7 +92,7 @@ void	draw(t_info *info)
 	mlx_put_image_to_window(info->mlx, info->win, info->img.img, 0, 0);
 }
 
-void	calc(t_info *info)
+void	calc(t_engine *info)
 {
 	int	x;
 
@@ -214,14 +214,14 @@ void	calc(t_info *info)
 	}
 }
 
-int	main_loop(t_info *info)
+int	main_loop(t_engine *info)
 {
 	calc(info);
 	draw(info);
 	return (0);
 }
 
-int	key_press(int key, t_info *info)
+int	key_press(int key, t_engine *info)
 {
 	if (key == K_W)
 	{
@@ -267,7 +267,7 @@ int	key_press(int key, t_info *info)
 
 int	main(void)
 {
-	t_info info;
+	t_engine info;
 	info.mlx = mlx_init();
 
 	info.posX = 22.0;

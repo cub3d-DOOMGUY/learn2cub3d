@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: scarf <youkim@student.42seoul.kr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/15 12:12:25 by yohan             #+#    #+#             */
-/*   Updated: 2022/04/17 14:40:15 by scarf            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,45 +6,40 @@
 
 const extern int worldMap[24][24];
 
-bool is_refresh(t_keyinfo keyinfo) {
-  return (keyinfo.is_up_pressed || keyinfo.is_down_pressed ||
-          keyinfo.is_left_pressed || keyinfo.is_right_pressed);
-}
-
-int main_loop(t_info* info) {
-  if (is_refresh(info->keyinfo))
-    raycast(info);
-  draw(info);
-  handle_movement(info);
+int main_loop(t_engine* engine) {
+  if (is_raycast_refresh(engine->keyinfo))
+    raycast(engine);
+  draw(engine);
+  handle_movement(engine);
 
   return (0);
 }
 
 int main(void) {
-  t_info info;
-  info.mlx = mlx_init();
+  t_engine engine;
+  engine.mlx = mlx_init();
 
-  info.posX = 12;
-  info.posY = 5;
-  info.dirX = -1;
-  info.dirY = 0;
-  info.planeX = 0;
-  info.planeY = 0.66;
-  info.moveSpeed = 0.02;
-  info.rotSpeed = 0.008;
-  info.keyinfo = (t_keyinfo){false, false, false, false};
+  engine.posX = 12;
+  engine.posY = 5;
+  engine.dirX = -1;
+  engine.dirY = 0;
+  engine.planeX = 0;
+  engine.planeY = 0.66;
+  engine.moveSpeed = 0.025;
+  engine.rotSpeed = 0.01;
+  engine.keyinfo = (t_keyinfo){false, false, false, false};
 
-  info.win = mlx_new_window(info.mlx, WIDTH, HEIGHT, "mlx");
+  engine.win = mlx_new_window(engine.mlx, WIDTH, HEIGHT, "mlx");
 
-  info.img.img = mlx_new_image(info.mlx, WIDTH, HEIGHT);
-  info.img.data = (int*)mlx_get_data_addr(info.img.img, &info.img.bpp,
-                                          &info.img.size_l, &info.img.endian);
+  engine.img.img = mlx_new_image(engine.mlx, WIDTH, HEIGHT);
+  engine.img.data = (int*)mlx_get_data_addr(engine.img.img, &engine.img.bpp,
+                                          &engine.img.size_l, &engine.img.endian);
 
-  raycast(&info);
-  mlx_loop_hook(info.mlx, &main_loop, &info);
-  mlx_hook(info.win, X11EVENTS__KeyPress, X11MASKS__KeyPressMask, &key_press,
-           &info);
-  mlx_hook(info.win, X11EVENTS__KeyRelease, X11MASKS__KeyReleaseMask,
-           &key_release, &info);
-  mlx_loop(info.mlx);
+  raycast(&engine);
+  mlx_loop_hook(engine.mlx, &main_loop, &engine);
+  mlx_hook(engine.win, X11EVENTS__KeyPress, X11MASKS__KeyPressMask, &key_press,
+           &engine);
+  mlx_hook(engine.win, X11EVENTS__KeyRelease, X11MASKS__KeyReleaseMask,
+           &key_release, &engine);
+  mlx_loop(engine.mlx);
 }

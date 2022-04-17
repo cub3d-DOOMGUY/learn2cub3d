@@ -2,7 +2,7 @@
 #include "engine.h"
 
 // FIXME: implement key library
-int key_release(t_keycode key, t_info* info) {
+int key_release(t_keycode key, t_engine* info) {
   if (key == KEY_W)
     info->keyinfo.is_up_pressed = false;
   if (key == KEY_S)
@@ -14,7 +14,7 @@ int key_release(t_keycode key, t_info* info) {
   return 0;
 }
 
-int key_press(t_keycode key, t_info* info) {
+int key_press(t_keycode key, t_engine* info) {
   if (key == KEY_W)
     info->keyinfo.is_up_pressed = true;
   if (key == KEY_S)

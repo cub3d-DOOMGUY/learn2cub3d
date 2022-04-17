@@ -3,7 +3,7 @@
 
 const extern int worldMap[24][24];
 
-void draw(t_info* info) {
+void draw(t_engine* info) {
   for (int y = 0; y < HEIGHT; y++)
     for (int x = 0; x < WIDTH; x++)
       info->img.data[y * WIDTH + x] =

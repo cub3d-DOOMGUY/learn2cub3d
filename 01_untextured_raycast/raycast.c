@@ -3,16 +3,21 @@
 
 const extern int worldMap[24][24];
 
-void raycast(t_info* info) {
-  clear_grid(info->buf);
+bool is_raycast_refresh(t_keyinfo keyinfo) {
+  return (keyinfo.is_up_pressed || keyinfo.is_down_pressed ||
+          keyinfo.is_left_pressed || keyinfo.is_right_pressed);
+}
+
+void raycast(t_engine* engine) {
+  clear_grid(engine->buf);
 
   for (int x = 0; x < WIDTH; x++) {
     double cameraX = 2 * x / (double)WIDTH - 1;
-    double rayDirX = info->dirX + info->planeX * cameraX;
-    double rayDirY = info->dirY + info->planeY * cameraX;
+    double rayDirX = engine->dirX + engine->planeX * cameraX;
+    double rayDirY = engine->dirY + engine->planeY * cameraX;
 
-    int mapX = (int)info->posX;
-    int mapY = (int)info->posY;
+    int mapX = (int)engine->posX;
+    int mapY = (int)engine->posY;
 
     // length of ray from current position to next x or y-side
     double sideDistX;
@@ -32,17 +37,17 @@ void raycast(t_info* info) {
 
     if (rayDirX < 0) {
       stepX = -1;
-      sideDistX = (info->posX - mapX) * deltaDistX;
+      sideDistX = (engine->posX - mapX) * deltaDistX;
     } else {
       stepX = 1;
-      sideDistX = (mapX + 1.0 - info->posX) * deltaDistX;
+      sideDistX = (mapX + 1.0 - engine->posX) * deltaDistX;
     }
     if (rayDirY < 0) {
       stepY = -1;
-      sideDistY = (info->posY - mapY) * deltaDistY;
+      sideDistY = (engine->posY - mapY) * deltaDistY;
     } else {
       stepY = 1;
-      sideDistY = (mapY + 1.0 - info->posY) * deltaDistY;
+      sideDistY = (mapY + 1.0 - engine->posY) * deltaDistY;
     }
 
     while (is_hit == false) {
@@ -61,9 +66,9 @@ void raycast(t_info* info) {
         is_hit = true;
     }
     if (side == 0)
-      perpWallDist = (mapX - info->posX + (1 - stepX) / 2) / rayDirX;
+      perpWallDist = (mapX - engine->posX + (1 - stepX) / 2) / rayDirX;
     else
-      perpWallDist = (mapY - info->posY + (1 - stepY) / 2) / rayDirY;
+      perpWallDist = (mapY - engine->posY + (1 - stepY) / 2) / rayDirY;
 
     // Calculate HEIGHT of line to draw on screen
     int lineHeight = (int)(HEIGHT / perpWallDist);
@@ -92,7 +97,7 @@ void raycast(t_info* info) {
       color = color / 2;
 
     for (int y = drawStart; y < drawEnd; y++)
-      info->buf[y][x] = color;
+      engine->buf[y][x] = color;
     // verLine(info, x, drawStart, drawEnd, color);
   }
 }

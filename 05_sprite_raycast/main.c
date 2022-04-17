@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   05_sprite_raycast.c                                :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scarf <youkim@student.42seoul.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 20:28:54 by yohlee            #+#    #+#             */
-/*   Updated: 2022/04/17 09:47:00 by scarf            ###   ########.fr       */
+/*   Updated: 2022/04/17 14:41:40 by scarf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ typedef struct	s_info
 	int		**texture;
 	double	moveSpeed;
 	double	rotSpeed;
-}				t_info;
+}				t_engine;
 
 typedef struct		s_pair
 {
@@ -106,7 +106,7 @@ typedef struct		s_pair
 	int		second;
 }					t_pair;
 
-void	key_update(t_info *info);
+void	key_update(t_engine *info);
 
 static int	compare(const void *first, const void *second)
 {
@@ -188,7 +188,7 @@ int	worldMap[mapWidth][mapHeight] =
 										{2,2,2,2,1,2,2,2,2,2,2,1,2,2,2,5,5,5,5,5,5,5,5,5}
 									};
 
-void	draw(t_info *info)
+void	draw(t_engine *info)
 {
 	for (int y = 0; y < height; y++)
 	{
@@ -200,7 +200,7 @@ void	draw(t_info *info)
 	mlx_put_image_to_window(info->mlx, info->win, info->img.img, 0, 0);
 }
 
-void	calc(t_info *info)
+void	calc(t_engine *info)
 {
 	//FLOOR CASTING
 	for(int y = height / 2 + 1; y < height; ++y)
@@ -423,7 +423,7 @@ void	calc(t_info *info)
 	}
 }
 
-int	main_loop(t_info *info)
+int	main_loop(t_engine *info)
 {
 	calc(info);
 	draw(info);
@@ -431,7 +431,7 @@ int	main_loop(t_info *info)
 	return (0);
 }
 
-void	key_update(t_info *info)
+void	key_update(t_engine *info)
 {
 	if (info->key_w)
 	{
@@ -474,7 +474,7 @@ void	key_update(t_info *info)
 		exit(0);
 }
 
-int		key_press(int key, t_info *info)
+int		key_press(int key, t_engine *info)
 {
 	if (key == K_ESC)
 		exit(0);
@@ -489,7 +489,7 @@ int		key_press(int key, t_info *info)
 	return (0);
 }
 
-int		key_release(int key, t_info *info)
+int		key_release(int key, t_engine *info)
 {
 	if (key == K_ESC)
 		exit(0);
@@ -504,7 +504,7 @@ int		key_release(int key, t_info *info)
 	return (0);
 }
 
-void	load_image(t_info *info, int *texture, char *path, t_img *img)
+void	load_image(t_engine *info, int *texture, char *path, t_img *img)
 {
 	img->img = mlx_xpm_file_to_image(info->mlx, path, &img->img_width, &img->img_height);
 	img->data = (int *)mlx_get_data_addr(img->img, &img->bpp, &img->size_l, &img->endian);
@@ -518,7 +518,7 @@ void	load_image(t_info *info, int *texture, char *path, t_img *img)
 	mlx_destroy_image(info->mlx, img->img);
 }
 
-void	load_texture(t_info *info)
+void	load_texture(t_engine *info)
 {
 	t_img	img;
 
@@ -538,7 +538,7 @@ void	load_texture(t_info *info)
 
 int	main(void)
 {
-	t_info info;
+	t_engine info;
 	info.mlx = mlx_init();
 
 	info.posX = 22.0;
