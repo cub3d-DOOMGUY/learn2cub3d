@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   05_sprite_raycast.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hakang <hakang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: scarf <youkim@student.42seoul.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 20:28:54 by yohlee            #+#    #+#             */
-/*   Updated: 2020/07/27 13:57:18 by hakang           ###   ########.fr       */
+/*   Updated: 2022/04/17 09:47:00 by scarf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx/mlx.h"
-#include "key_macos.h"
+#include "mlx_linux/mlx.h"
+#include "key_linux.h"
 #include <math.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #define X_EVENT_KEY_PRESS	2
-# define X_EVENT_KEY_RELEASE	3
+#define X_EVENT_KEY_RELEASE	3
 #define X_EVENT_KEY_EXIT	17
 #define texWidth 64
 #define texHeight 64
@@ -580,14 +580,14 @@ int	main(void)
 
 	info.moveSpeed = 0.05;
 	info.rotSpeed = 0.05;
-	
+
 	info.win = mlx_new_window(info.mlx, width, height, "mlx");
 
 	info.img.img = mlx_new_image(info.mlx, width, height);
 	info.img.data = (int *)mlx_get_data_addr(info.img.img, &info.img.bpp, &info.img.size_l, &info.img.endian);
-	
+
 	mlx_loop_hook(info.mlx, &main_loop, &info);
-	mlx_hook(info.win, X_EVENT_KEY_PRESS, 0, &key_press, &info);
+	mlx_hook(info.win, X_EVENT_KEY_PRESS, 1L << 0, &key_press, &info);
 	mlx_hook(info.win, X_EVENT_KEY_RELEASE, 0, &key_release, &info);
 
 	mlx_loop(info.mlx);

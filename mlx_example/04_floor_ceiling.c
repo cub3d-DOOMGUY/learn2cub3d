@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   04_floor_ceiling_macos.c                           :+:      :+:    :+:   */
+/*   04_floor_ceiling.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yohlee <yohlee@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: scarf <youkim@student.42seoul.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 19:53:20 by yohlee            #+#    #+#             */
-/*   Updated: 2020/07/21 08:11:30 by yohlee           ###   ########.fr       */
+/*   Updated: 2022/04/17 09:23:25 by scarf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx/mlx.h"
-#include "key_macos.h"
+#include "mlx_linux/mlx.h"
+#include "key_linux.h"
 #include <math.h>
 #include <string.h>
 #include <stdio.h>
@@ -162,23 +162,23 @@ void	calc(t_info *info)
 		double cameraX = 2 * x / (double)width - 1;
 		double rayDirX = info->dirX + info->planeX * cameraX;
 		double rayDirY = info->dirY + info->planeY * cameraX;
-		
+
 		int mapX = (int)info->posX;
 		int mapY = (int)info->posY;
 
 		//length of ray from current position to next x or y-side
 		double sideDistX;
 		double sideDistY;
-		
+
 		 //length of ray from one x or y-side to next x or y-side
 		double deltaDistX = fabs(1 / rayDirX);
 		double deltaDistY = fabs(1 / rayDirY);
 		double perpWallDist;
-		
+
 		//what direction to step in x or y-direction (either +1 or -1)
 		int stepX;
 		int stepY;
-		
+
 		int hit = 0; //was there a wall hit?
 		int side; //was a NS or a EW wall hit?
 
@@ -454,14 +454,14 @@ int	main(void)
 
 	info.moveSpeed = 0.05;
 	info.rotSpeed = 0.05;
-	
+
 	info.win = mlx_new_window(info.mlx, width, height, "mlx");
 
 	info.img.img = mlx_new_image(info.mlx, width, height);
 	info.img.data = (int *)mlx_get_data_addr(info.img.img, &info.img.bpp, &info.img.size_l, &info.img.endian);
 
 	mlx_loop_hook(info.mlx, &main_loop, &info);
-	mlx_hook(info.win, X_EVENT_KEY_PRESS, 0, &key_press, &info);
+	mlx_hook(info.win, X_EVENT_KEY_PRESS, 1L << 0, &key_press, &info);
 
 	mlx_loop(info.mlx);
 }
