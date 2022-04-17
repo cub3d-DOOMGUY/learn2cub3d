@@ -4,10 +4,7 @@
 const extern int worldMap[24][24];
 
 void calc(t_info* info) {
-  int x;
-
-  x = -1;
-  while (++x < WIDTH) {
+  for (int x = 0; x < WIDTH; x++) {
     double cameraX = 2 * x / (double)WIDTH - 1;
     double rayDirX = info->dirX + info->planeX * cameraX;
     double rayDirY = info->dirY + info->planeY * cameraX;
@@ -28,7 +25,7 @@ void calc(t_info* info) {
     int stepX;
     int stepY;
 
-    int hit = 0;  // was there a wall hit?
+    bool is_hit = false;  // was there a wall hit?
     int side;     // was a NS or a EW wall hit?
 
     if (rayDirX < 0) {
@@ -46,7 +43,7 @@ void calc(t_info* info) {
       sideDistY = (mapY + 1.0 - info->posY) * deltaDistY;
     }
 
-    while (hit == 0) {
+    while (is_hit == false) {
       // jump to next map square, OR in x-direction, OR in y-direction
       if (sideDistX < sideDistY) {
         sideDistX += deltaDistX;
@@ -59,7 +56,7 @@ void calc(t_info* info) {
       }
       // Check if ray has hit a wall
       if (worldMap[mapX][mapY] > 0)
-        hit = 1;
+        is_hit = true;
     }
     if (side == 0)
       perpWallDist = (mapX - info->posX + (1 - stepX) / 2) / rayDirX;
@@ -92,6 +89,8 @@ void calc(t_info* info) {
     if (side == 1)
       color = color / 2;
 
-    verLine(info, x, drawStart, drawEnd, color);
+    for (int y = drawStart; y < drawEnd; y++)
+      info->buf[y][x] = color;
+    // verLine(info, x, drawStart, drawEnd, color);
   }
 }

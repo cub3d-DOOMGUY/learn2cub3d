@@ -6,7 +6,7 @@
 /*   By: scarf <youkim@student.42seoul.kr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 19:53:20 by yohlee            #+#    #+#             */
-/*   Updated: 2022/04/17 13:24:47 by scarf            ###   ########.fr       */
+/*   Updated: 2022/04/17 13:58:52 by scarf            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -326,16 +326,13 @@ void calc(t_info* info) {
 }
 
 int main_loop(t_info* info) {
-  if (frame > 60)
-    frame = 0;
-  if (frame == 0)
-    calc(info);
+  calc(info);
   draw(info);
   return (0);
 }
 
 int key_press(int key, t_info* info) {
-  if (key == K_W) {
+  if (key == KEY_W) {
     if (!worldMap[(int)(info->posX + info->dirX * info->moveSpeed)]
                  [(int)(info->posY)])
       info->posX += info->dirX * info->moveSpeed;
@@ -344,7 +341,7 @@ int key_press(int key, t_info* info) {
       info->posY += info->dirY * info->moveSpeed;
   }
   // move backwards if no wall behind you
-  if (key == K_S) {
+  if (key == KEY_S) {
     if (!worldMap[(int)(info->posX - info->dirX * info->moveSpeed)]
                  [(int)(info->posY)])
       info->posX -= info->dirX * info->moveSpeed;
@@ -353,7 +350,7 @@ int key_press(int key, t_info* info) {
       info->posY -= info->dirY * info->moveSpeed;
   }
   // rotate to the right
-  if (key == K_D) {
+  if (key == KEY_D) {
     // both camera direction and camera plane must be rotated
     double oldDirX = info->dirX;
     info->dirX =
@@ -367,7 +364,7 @@ int key_press(int key, t_info* info) {
         oldPlaneX * sin(-info->rotSpeed) + info->planeY * cos(-info->rotSpeed);
   }
   // rotate to the left
-  if (key == K_A) {
+  if (key == KEY_A) {
     // both camera direction and camera plane must be rotated
     double oldDirX = info->dirX;
     info->dirX =
@@ -380,7 +377,7 @@ int key_press(int key, t_info* info) {
     info->planeY =
         oldPlaneX * sin(info->rotSpeed) + info->planeY * cos(info->rotSpeed);
   }
-  if (key == K_ESC)
+  if (key == KEY_ESC)
     exit(0);
   return (0);
 }
@@ -453,6 +450,5 @@ int main(void) {
 
   mlx_loop_hook(info.mlx, &main_loop, &info);
   mlx_hook(info.win, X_EVENT_KEY_PRESS, 1L << 0, &key_press, &info);
-  mlx_do_key_autorepeaton(info.mlx);
   mlx_loop(info.mlx);
 }

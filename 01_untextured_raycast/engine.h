@@ -1,15 +1,18 @@
 #ifndef __ENGINE_H__
 #define __ENGINE_H__
 
-#define mapWidth 24
-#define mapHeight 24
-#define WIDTH 640
-#define HEIGHT 480
-
 #include <stdbool.h>
 #include "key_linux.h"
 #include "mlx_linux/mlx.h"
 #include "x11_enums.h"
+
+typedef enum e_config {
+  mapWidth = 24,
+  mapHeight = 24,
+  WIDTH = 640,
+  HEIGHT = 480,
+} t_config;
+
 typedef struct s_vec {
   double x;
   double y;
@@ -21,6 +24,17 @@ typedef struct s_keyinfo {
   bool is_left_pressed;
   bool is_right_pressed;
 } t_keyinfo;
+
+typedef struct s_img {
+  void* img;
+  int* data;
+
+  int size_l;
+  int bpp;
+  int endian;
+  int img_width;
+  int img_height;
+} t_img;
 
 typedef struct s_info {
   double posX;
@@ -34,27 +48,30 @@ typedef struct s_info {
   void* buffer;
   double moveSpeed;
   double rotSpeed;
+  t_img img;
+  int buf[HEIGHT][WIDTH];
   t_keyinfo keyinfo;
 } t_info;
 
 // clang-format off
 //@func
 /*
+** < calc.c > */
+
+void	calc(t_info* info);
+/*
 ** < draw.c > */
 
-void	verLine(t_info* info, int x, int y1, int y2, int color);
+void	draw(t_info* info);
 /*
 ** < main.c > */
 
 int		main_loop(t_info* info);
 int		key_release(t_keycode key, t_info* info);
 int		key_press(t_keycode key, t_info* info);
+void	clear_grid(int grid[HEIGHT][WIDTH]);
 /*
 ** < movement.c > */
 
 void	handle_move(t_info* info);
-/*
-** < util.c > */
-
-void	calc(t_info* info);
 #endif  // __ENGINE_H__
