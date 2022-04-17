@@ -1,4 +1,5 @@
 #include <math.h>
+#include "color.h"
 #include "engine.h"
 
 const extern int worldMap[24][24];
@@ -6,6 +7,16 @@ const extern int worldMap[24][24];
 bool is_raycast_refresh(t_keyinfo keyinfo) {
   return (keyinfo.is_up_pressed || keyinfo.is_down_pressed ||
           keyinfo.is_left_pressed || keyinfo.is_right_pressed);
+}
+
+t_colors get_color(int map_y, int map_x) {
+  const t_colors colors[] = {
+      COLOR__YELLOW, COLOR__RED, COLOR__GREEN, COLOR__BLUE, COLOR__WHITE,
+  };
+  const int index = worldMap[map_y][map_x];
+  if (index > 4)
+    return colors[0];
+  return colors[index];
 }
 
 void raycast(t_engine* e) {
@@ -81,17 +92,7 @@ void raycast(t_engine* e) {
     if (drawEnd >= HEIGHT)
       drawEnd = HEIGHT - 1;
 
-    int color;
-    if (worldMap[mapY][mapX] == 1)
-      color = 0xFF1111;
-    else if (worldMap[mapY][mapX] == 2)
-      color = 0x11FF11;
-    else if (worldMap[mapY][mapX] == 3)
-      color = 0x1111FF;
-    else if (worldMap[mapY][mapX] == 4)
-      color = 0xAAAAAA;
-    else
-      color = 0xFFFF11;
+    int color = get_color(mapY, mapX);
 
     if (side == 1)
       color = color / 2;

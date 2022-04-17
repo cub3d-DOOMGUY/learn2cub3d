@@ -1,11 +1,11 @@
 NAME := program.out
 LIB_PATH := ../lib
 CFLAGS := -Wall -Werror -Wextra
-INC := -I$(LIB_PATH)
+INC := -I$(LIB_PATH) -I include/
 LIB := -L$(LIB_PATH)/mlx_linux -lmlx -lXext -lX11 -lm
 CC := clang
 
-SRC = $(wildcard *.c)
+SRC = $(wildcard src/*.c)
 OBJ = $(SRC:.c=.o)
 
 %.o: %.c
