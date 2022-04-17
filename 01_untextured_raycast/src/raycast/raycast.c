@@ -1,10 +1,11 @@
 #include <math.h>
-#include "color.h"
+#include "types__color.h"
+#include "types__engine.h"
 #include "engine.h"
 
 const extern int worldMap[24][24];
 
-bool is_raycast_refresh(t_keyinfo keyinfo) {
+bool is_raycast_refresh(t_engine__keyinfo keyinfo) {
   return (keyinfo.is_up_pressed || keyinfo.is_down_pressed ||
           keyinfo.is_left_pressed || keyinfo.is_right_pressed);
 }

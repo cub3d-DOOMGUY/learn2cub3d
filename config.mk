@@ -1,11 +1,13 @@
 NAME := program.out
 LIB_PATH := ../lib
 CFLAGS := -Wall -Werror -Wextra
-INC := -I$(LIB_PATH) -I include/
+INC := -I$(LIB_PATH) -I include/ -I include/types
 LIB := -L$(LIB_PATH)/mlx_linux -lmlx -lXext -lX11 -lm
 CC := clang
 
-SRC = $(wildcard src/*.c)
+PKGS = engine raycast data
+
+SRC = $(wildcard src/**/*.c) src/main.c
 OBJ = $(SRC:.c=.o)
 
 %.o: %.c
@@ -25,4 +27,9 @@ clean:
 re: clean all
 
 docs:
-	hgen -I engine.h $(SRC)
+	@set -e;\
+		for p in $(PKGS); do\
+			hgen -I include/$$p.h src/$$p ;\
+		done
+
+#1> /dev/null;\

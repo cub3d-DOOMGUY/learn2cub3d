@@ -1,5 +1,6 @@
-#ifndef __COLOR_H__
-#define __COLOR_H__
+#ifndef __TYPES__COLORS_H__
+#define __TYPES__COLORS_H__
+
 
 typedef enum e_colors {
   COLOR__YELLOW = 0xFFFF00,
@@ -8,4 +9,5 @@ typedef enum e_colors {
   COLOR__BLUE = 0x0000FF,
   COLOR__WHITE = 0xFFFFFF,
 } t_colors;
-#endif  // __COLOR_H__
+
+#endif // __TYPES__COLORS_H__

@@ -2,7 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "data.h"
 #include "engine.h"
+#include "raycast.h"
 
 const extern int worldMap[24][24];
 
@@ -25,7 +27,7 @@ int main(void) {
   engine.plane = (t_vec){0, 0.66};
   engine.moveSpeed = 0.025;
   engine.rotSpeed = 0.01;
-  engine.keyinfo = (t_keyinfo){false, false, false, false};
+  engine.keyinfo = (t_engine__keyinfo){false, false, false, false};
 
   engine.win = mlx_new_window(engine.mlx, WIDTH, HEIGHT, "mlx");
 
@@ -33,13 +35,14 @@ int main(void) {
   engine.img.data = (int*)mlx_get_data_addr(
       engine.img.img, &engine.img.bpp, &engine.img.size_l, &engine.img.endian);
 
-  raycast(&engine);
-  draw(&engine);
-
   mlx_loop_hook(engine.mlx, &main_loop, &engine);
   mlx_hook(engine.win, X11EVENTS__KeyPress, X11MASKS__KeyPressMask, &key_press,
            &engine);
   mlx_hook(engine.win, X11EVENTS__KeyRelease, X11MASKS__KeyReleaseMask,
            &key_release, &engine);
+
+  raycast(&engine);
+  draw(&engine);
+
   mlx_loop(engine.mlx);
 }
